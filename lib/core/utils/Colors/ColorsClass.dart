@@ -5,7 +5,7 @@ abstract class ColorsClass {
   static const blue1 = Color(0xFFE3F2FD);
   static const blue2 = Color(0xFFBBDEFB);
 
-  static const shadowColor = Color.fromARGB(255, 83, 94, 107);
+  static const shadowColor = Color.fromARGB(255, 104, 116, 131);
 
   static const backgroundGradient = LinearGradient(
       begin: AlignmentDirectional.topEnd,

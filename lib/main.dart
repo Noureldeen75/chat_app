@@ -1,3 +1,4 @@
+import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/features/Auth/presentation/views/login/login_view.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
+        primaryColor: ColorsClass.mainBlue,
+        
         scaffoldBackgroundColor: Colors.transparent,
       ),
       home: LoginView(),
