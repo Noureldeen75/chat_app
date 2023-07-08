@@ -58,8 +58,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -76,7 +76,10 @@ flutter:
   fonts:
     - family: YsabeauOffice
       fonts:
-        - asset: assets/fonts/
+        - asset: assets/fonts/YsabeauOffice-Bold.ttf
+        # - asset: assets/fonts/YsabeauOffice-SemiBoldItalic.ttf
+        - asset: assets/fonts/YsabeauOffice-Regular.ttf
+        # - asset: assets/fonts/YsabeauOffice-Medium.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
