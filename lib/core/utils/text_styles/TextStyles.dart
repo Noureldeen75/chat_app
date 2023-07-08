@@ -7,6 +7,6 @@ abstract class TextStyles {
       fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'YsabeauOffice');
   static const textSize23 = TextStyle(
       fontSize: 23, fontWeight: FontWeight.bold, fontFamily: 'YsabeauOffice');
-  static const textSize30 = TextStyle(
-      fontSize: 30, fontWeight: FontWeight.bold, fontFamily: 'YsabeauOffice');
+  static const textSize35 = TextStyle(
+      fontSize: 35, fontWeight: FontWeight.w900, fontFamily: 'YsabeauOffice');
 }

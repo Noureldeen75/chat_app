@@ -35,7 +35,7 @@ class CustomAuthTextField extends StatelessWidget {
           prefixIcon: Icon(prefixIconDate),
           filled: true,
           fillColor: ColorsClass.blue1, // Set the background color here
-          contentPadding: EdgeInsets.symmetric(vertical: 15.0),
+          contentPadding: EdgeInsets.symmetric(vertical: 13.0),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(color: ColorsClass.mainBlue),

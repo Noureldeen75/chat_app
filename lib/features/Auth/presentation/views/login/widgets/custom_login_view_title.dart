@@ -8,18 +8,24 @@ class CustomLoginViewTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-        text: TextSpan(
-            text: "Welcom ",
-            style: TextStyles.textSize30
-                .copyWith(color: Color.fromARGB(255, 182, 167, 30)),
-            children: [
-          TextSpan(
-            text: "Back",
-            style: TextStyles.textSize30.copyWith(
-                color: Color.fromARGB(255, 182, 167, 30),
-                fontWeight: FontWeight.w900),
-          ),
-        ]));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              "Welcome",
+              style: TextStyles.textSize35
+                  .copyWith(color: Color.fromARGB(255, 202, 186, 47)),
+            )),
+        Align(
+            alignment: AlignmentDirectional.center,
+            child: Text(
+              "Back",
+              style: TextStyles.textSize35
+                  .copyWith(color: Color.fromARGB(255, 202, 186, 47)),
+            )),
+      ],
+    );
   }
 }

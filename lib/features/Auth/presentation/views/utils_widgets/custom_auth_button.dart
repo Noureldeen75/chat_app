@@ -14,17 +14,18 @@ class CustomAuthButton extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Container(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.all(7.0),
         decoration: BoxDecoration(
           //  borderRadius: BorderRadius.circular(10),
           color: ColorsClass.blue1,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
+              
               color: ColorsClass.shadowColor,
-              spreadRadius: 1,
+              spreadRadius: 0,
               blurRadius: 1,
-              offset: Offset(2, 2),
+              offset: Offset(0.2, 2),
             ),
           ],
         ),
@@ -39,7 +40,7 @@ class CustomAuthButton extends StatelessWidget {
                   color: ColorsClass.shadowColor,
                   spreadRadius: 1,
                   blurRadius: 1,
-                  offset: Offset(2, 2),
+                  offset: Offset(0.2, 2),
                 ),
               ],
             ),

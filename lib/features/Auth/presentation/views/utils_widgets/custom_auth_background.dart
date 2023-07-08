@@ -19,6 +19,15 @@ class CustomAuthBackground extends StatelessWidget {
             height: deviceHeight(context) * 0.5,
             width: double.infinity,
             color: ColorsClass.mainBlue,
+            child: Image.asset(
+              "assets/images/chat_cover.jpg",
+              fit: BoxFit.cover,
+            ),
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.6),
+            height: deviceHeight(context) * 0.5,
+            width: double.infinity,
           ),
           SafeArea(
             child: child,
