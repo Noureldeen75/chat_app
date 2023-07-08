@@ -1,3 +1,5 @@
+import 'package:chat_app/core/widgets/custom_background.dart';
+import 'package:chat_app/features/Auth/presentation/views/login/login_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Container(),
+      home: LoginView(),
     );
   }
 }
