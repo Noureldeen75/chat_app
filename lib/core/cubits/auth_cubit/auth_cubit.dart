@@ -12,6 +12,7 @@ class AuthCubit extends Cubit<AuthStates> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  bool isEmailVericationSent = false;
 
   void signIn() async {
     emit(AuthSignInLoadingState());
@@ -54,10 +55,40 @@ class AuthCubit extends Cubit<AuthStates> {
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-       emit(AuthSignUpErrorState());
+      emit(AuthSignUpErrorState());
     } catch (e) {
       print(e);
-       emit(AuthSignUpErrorState());
+      emit(AuthSignUpErrorState());
+    }
+  }
+
+  void sendEmailVertication() async {
+    emit(AuthSendingEmailVerticationLoadingState());
+    var user = FirebaseAuth.instance.currentUser;
+    try {
+      await user?.sendEmailVerification().then((value) {
+        isEmailVericationSent = true;
+        print(user.uid);
+        print(user.emailVerified);
+        print("Done");
+        emit(AuthSendingEmailVerticationSuccessState());
+      });
+    } on Exception catch (e) {
+      print(e);
+      emit(AuthSendingEmailVerticationErrorState());
+    }
+  }
+
+  void deleteUserAccount() async {
+    emit(AuthDeletingUserAccountLoadingState());
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+      await user?.delete().then((value) {
+        emit(AuthDeletingUserAccountSuccessState());
+      });
+    } on FirebaseAuthException catch (e) {
+      print('Failed to delete user account: ${e.message}');
+      emit(AuthDeletingUserAccountErrorState());
     }
   }
 }

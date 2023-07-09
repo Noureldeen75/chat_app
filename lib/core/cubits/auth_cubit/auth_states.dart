@@ -9,3 +9,11 @@ class AuthSignInErrorState extends AuthStates{}
 class AuthSignUpLoadingState extends AuthStates{}
 class AuthSignUpSuccessState extends AuthStates{}
 class AuthSignUpErrorState extends AuthStates{}
+
+class AuthSendingEmailVerticationLoadingState extends AuthStates{}
+class AuthSendingEmailVerticationSuccessState extends AuthStates{}
+class AuthSendingEmailVerticationErrorState extends AuthStates{}
+
+class AuthDeletingUserAccountLoadingState extends AuthStates{}
+class AuthDeletingUserAccountSuccessState extends AuthStates{}
+class AuthDeletingUserAccountErrorState extends AuthStates{}
