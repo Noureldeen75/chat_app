@@ -8,8 +8,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomRegisterEmailVertication extends StatelessWidget {
-  const CustomRegisterEmailVertication({super.key});
+class CustomRegisterEmailVerticationBar extends StatelessWidget {
+  const CustomRegisterEmailVerticationBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +47,11 @@ class CustomRegisterEmailVertication extends StatelessWidget {
                               ),
                             ),
                           ),
-                fallback: (context) =>
-                    SizedBox(height: 22.0, child: CircularProgressIndicator(color: ColorsClass.mainBlue,)),
+                fallback: (context) => SizedBox(
+                    height: 22.0,
+                    child: CircularProgressIndicator(
+                      color: ColorsClass.mainBlue,
+                    )),
               ),
             ],
           ),

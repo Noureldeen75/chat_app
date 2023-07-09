@@ -1,10 +1,11 @@
 import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
+import 'package:chat_app/core/functions/animated_navigation.dart';
 import 'package:chat_app/core/functions/device_info.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/core/widgets/custom_background.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box_info.dart';
-import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box_info_content.dart';
+import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box_content.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_view_title.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_background.dart';
 import 'package:chat_app/features/Auth/presentation/views/login/widgets/custom_login_box_info.dart';
@@ -29,7 +30,7 @@ class RegisterViewBody extends StatelessWidget {
             child: CustomRegisterViewTitle(),
           ),
           PositionedDirectional(
-            bottom: (deviceHeight(context) * 0.55  -
+            bottom: (deviceHeight(context) * 0.55 -
                 deviceHeight(context) * 0.6 * 0.5),
             start: 0,
             end: 0,
@@ -44,9 +45,22 @@ class RegisterViewBody extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                           horizontal: 15.0,
                         ),
-                        child: CustomRegisterBoxInfoContent()),
+                        child: CustomRegisterBoxContent()),
                   ),
-                  Positioned(bottom: -5, child: CustomAuthButton(onTap: AuthCubit.get(context).signUp,))
+                  Positioned(
+                      bottom: -5,
+                      child: CustomAuthButton(
+                        onTap: () async {
+                          if (AuthCubit.get(context).isUserCreated &&
+                              AuthCubit.get(context).isBoxVerticationContent) {
+                                if (await AuthCubit.get(context).emailVertication()) {
+                              //    Navigator.push(context, FlipPageRoute(builder: builder))
+                                }
+                          } else {
+                            AuthCubit.get(context).signUp();
+                          }
+                        },
+                      ))
                 ],
               ),
             ),

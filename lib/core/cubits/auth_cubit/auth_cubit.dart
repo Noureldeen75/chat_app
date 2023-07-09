@@ -13,6 +13,13 @@ class AuthCubit extends Cubit<AuthStates> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   bool isEmailVericationSent = false;
+  bool isUserCreated = false;
+  bool isBoxVerticationContent = false;
+
+  void toggRegisterleBoxContent() {
+    isBoxVerticationContent = !isBoxVerticationContent;
+    emit(AuthRegisterToggleBoxInfoConState());
+  }
 
   void signIn() async {
     emit(AuthSignInLoadingState());
@@ -46,6 +53,8 @@ class AuthCubit extends Cubit<AuthStates> {
         password: passwordController.text.trim(),
       )
           .then((value) {
+        isUserCreated = true;
+        isBoxVerticationContent = true;
         print("Done");
         emit(AuthSignUpSuccessState());
       });
@@ -68,7 +77,6 @@ class AuthCubit extends Cubit<AuthStates> {
     try {
       await user?.sendEmailVerification().then((value) {
         isEmailVericationSent = true;
-        print(user.uid);
         print(user.emailVerified);
         print("Done");
         emit(AuthSendingEmailVerticationSuccessState());
@@ -77,6 +85,20 @@ class AuthCubit extends Cubit<AuthStates> {
       print(e);
       emit(AuthSendingEmailVerticationErrorState());
     }
+  }
+
+  Future<bool> emailVertication() async {
+    emit(AuthEmailVerticationLoadingState());
+    var user = FirebaseAuth.instance.currentUser;
+    try {
+      await user
+          ?.reload()
+          .then((value) => emit(AuthEmailVerticationSuccessState()));
+    } on Exception catch (e) {
+      print(e);
+      emit(AuthEmailVerticationErrorState());
+    }
+    return user!.emailVerified;
   }
 
   void deleteUserAccount() async {
