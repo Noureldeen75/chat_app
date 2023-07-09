@@ -13,6 +13,7 @@ import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_a
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_down_section.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_text_field.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_facebook_google.dart';
+import 'package:chat_app/features/Home/presentation/views/home_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -53,9 +54,13 @@ class RegisterViewBody extends StatelessWidget {
                         onTap: () async {
                           if (AuthCubit.get(context).isUserCreated &&
                               AuthCubit.get(context).isBoxVerticationContent) {
-                                if (await AuthCubit.get(context).emailVertication()) {
-                              //    Navigator.push(context, FlipPageRoute(builder: builder))
-                                }
+                            if (await AuthCubit.get(context)
+                                .emailVertication()) {
+                              Navigator.push(
+                                  context,
+                                  FlipPageRoute(
+                                      builder: (context) => HomeView()));
+                            }
                           } else {
                             AuthCubit.get(context).signUp();
                           }
