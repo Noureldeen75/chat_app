@@ -8,8 +8,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class CustomAuthDownSection extends StatelessWidget {
-  const CustomAuthDownSection({super.key});
+  const CustomAuthDownSection({super.key, required this.isLogin, required this.onTap});
 
+  final bool isLogin;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -19,12 +21,14 @@ class CustomAuthDownSection extends StatelessWidget {
           Spacer(),
           RichText(
               text: TextSpan(
-                  text: "Don't have an account? ",
+                  text: isLogin
+                      ? "Don't have an account? "
+                      : "Already have an account? ",
                   style: TextStyles.textSize20.copyWith(color: Colors.black),
                   children: [
                 TextSpan(
-                    text: "Sign Up",
-                    recognizer: TapGestureRecognizer()..onTap = () {},
+                    text: isLogin ? "Sign Up" : "Sign In",
+                    recognizer: TapGestureRecognizer()..onTap = onTap,
                     style: TextStyles.textSize20
                         .copyWith(color: ColorsClass.mainBlue)),
               ])),
