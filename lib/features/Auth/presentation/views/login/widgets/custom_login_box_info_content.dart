@@ -1,3 +1,4 @@
+import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_text_field.dart';
@@ -25,11 +26,13 @@ class CustomLoginBoxInfoContent extends StatelessWidget {
         CustomAuthTextField(
           label: 'Email',
           prefixIconDate: Icons.person,
+          controller: AuthCubit.get(context).emailController,
         ),
         Spacer(),
         CustomAuthTextField(
           label: 'Password',
           prefixIconDate: Icons.lock,
+          controller: AuthCubit.get(context).passwordController,
         ),
         Spacer(
           flex: 4,

@@ -1,3 +1,4 @@
+import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/core/functions/device_info.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
@@ -45,7 +46,7 @@ class RegisterViewBody extends StatelessWidget {
                         ),
                         child: CustomRegisterBoxInfoContent()),
                   ),
-                  Positioned(bottom: -5, child: CustomAuthButton())
+                  Positioned(bottom: -5, child: CustomAuthButton(onTap: AuthCubit.get(context).signUp,))
                 ],
               ),
             ),

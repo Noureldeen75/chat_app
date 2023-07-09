@@ -6,10 +6,11 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 class CustomAuthTextField extends StatelessWidget {
   const CustomAuthTextField(
-      {super.key, required this.label, required this.prefixIconDate});
+      {super.key, required this.label, required this.prefixIconDate, required this.controller});
 
   final String label;
   final IconData prefixIconDate;
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,6 +26,7 @@ class CustomAuthTextField extends StatelessWidget {
         ],
       ),
       child: TextFormField(
+        controller: controller,
         style: TextStyles.textSize18.copyWith(color: ColorsClass.mainBlue),
         cursorColor: ColorsClass.mainBlue,
         decoration: InputDecoration(

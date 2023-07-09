@@ -1,3 +1,4 @@
+import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/core/functions/device_info.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
@@ -44,7 +45,7 @@ class LoginViewBody extends StatelessWidget {
                         ),
                         child: CustomLoginBoxInfoContent()),
                   ),
-                  Positioned(bottom: -15, child: CustomAuthButton())
+                  Positioned(bottom: -15, child: CustomAuthButton(onTap: AuthCubit.get(context).signIn,))
                 ],
               ),
             ),

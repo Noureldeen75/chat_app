@@ -6,13 +6,13 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 class CustomAuthButton extends StatelessWidget {
   const CustomAuthButton({
-    super.key,
+    super.key, required this.onTap,
   });
-
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(7.0),
         decoration: BoxDecoration(
@@ -21,7 +21,6 @@ class CustomAuthButton extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              
               color: ColorsClass.shadowColor,
               spreadRadius: 0,
               blurRadius: 1,
@@ -33,13 +32,12 @@ class CustomAuthButton extends StatelessWidget {
             padding: EdgeInsets.all(15.0),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                begin: AlignmentDirectional.topEnd,
-                end: AlignmentDirectional.topStart,
-                colors: [
-                  Color.fromARGB(255, 56, 149, 248),
-                  ColorsClass.mainBlue,
-                ]
-              ),
+                  begin: AlignmentDirectional.topEnd,
+                  end: AlignmentDirectional.topStart,
+                  colors: [
+                    Color.fromARGB(255, 56, 149, 248),
+                    ColorsClass.mainBlue,
+                  ]),
               //   borderRadius: BorderRadius.circular(5.0),
               shape: BoxShape.circle,
               boxShadow: [

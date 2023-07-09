@@ -1,3 +1,4 @@
+import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_email_vertication.dart';
@@ -29,6 +30,7 @@ class CustomRegisterBoxInfoContent extends StatelessWidget {
               child: CustomAuthTextField(
                 label: 'User name',
                 prefixIconDate: Icons.person,
+                controller: AuthCubit.get(context).userNameController,
               ),
             ),
             SizedBox(
@@ -38,6 +40,7 @@ class CustomRegisterBoxInfoContent extends StatelessWidget {
               child: CustomAuthTextField(
                 label: 'Age',
                 prefixIconDate: Icons.person,
+                controller: AuthCubit.get(context).ageController,
               ),
             ),
           ],
@@ -48,6 +51,7 @@ class CustomRegisterBoxInfoContent extends StatelessWidget {
         CustomAuthTextField(
           label: 'Email',
           prefixIconDate: Icons.person,
+          controller: AuthCubit.get(context).emailController,
         ),
         Spacer(),
         CustomRegisterEmailVertication(),
@@ -57,6 +61,7 @@ class CustomRegisterBoxInfoContent extends StatelessWidget {
         CustomAuthTextField(
           label: 'Password',
           prefixIconDate: Icons.lock,
+          controller: AuthCubit.get(context).passwordController,
         ),
         Spacer(
           flex: 2,
@@ -64,6 +69,7 @@ class CustomRegisterBoxInfoContent extends StatelessWidget {
         CustomAuthTextField(
           label: 'Confirm Password',
           prefixIconDate: Icons.check,
+          controller: AuthCubit.get(context).confirmPasswordController,
         ),
         Spacer(
           flex: 4,
