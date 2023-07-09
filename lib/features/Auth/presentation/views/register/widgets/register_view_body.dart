@@ -1,6 +1,7 @@
 import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/core/functions/animated_navigation.dart';
 import 'package:chat_app/core/functions/device_info.dart';
+import 'package:chat_app/core/functions/showing_toast.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/core/widgets/custom_background.dart';
@@ -60,6 +61,9 @@ class RegisterViewBody extends StatelessWidget {
                                   context,
                                   FlipPageRoute(
                                       builder: (context) => HomeView()));
+                              showToast("Registered Successfully", true);
+                            }else{
+                              showToast("Please, Confirm your email", true);
                             }
                           } else {
                             AuthCubit.get(context).signUp();
