@@ -1,10 +1,12 @@
 import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
-import 'package:chat_app/core/functions/animated_navigation.dart';
+import 'package:chat_app/core/functions/navigation/animated_navigation.dart';
 import 'package:chat_app/core/functions/device_info.dart';
+import 'package:chat_app/core/functions/navigation/navigator_push_replacement.dart';
 import 'package:chat_app/core/functions/showing_toast.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/core/widgets/custom_background.dart';
+import 'package:chat_app/features/Auth/presentation/views/login/login_view.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box_info.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box_content.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_view_title.dart';
@@ -55,16 +57,7 @@ class RegisterViewBody extends StatelessWidget {
                         onTap: () async {
                           if (AuthCubit.get(context).isUserCreated &&
                               AuthCubit.get(context).isBoxVerticationContent) {
-                            if (await AuthCubit.get(context)
-                                .emailVertication()) {
-                              Navigator.push(
-                                  context,
-                                  FlipPageRoute(
-                                      builder: (context) => HomeView()));
-                              showToast("Registered Successfully", true);
-                            }else{
-                              showToast("Please, Confirm your email", true);
-                            }
+                            AuthCubit.get(context).emailVertication(context);
                           } else {
                             AuthCubit.get(context).signUp();
                           }
@@ -80,7 +73,9 @@ class RegisterViewBody extends StatelessWidget {
               end: 0,
               child: CustomAuthDownSection(
                 isLogin: false,
-                onTap: () {},
+                onTap: () {
+                  NavigatorPushReplacement(context, LoginView());
+                },
               )),
         ],
       ),

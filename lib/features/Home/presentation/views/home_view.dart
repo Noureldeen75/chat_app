@@ -1,3 +1,4 @@
+import 'package:chat_app/core/widgets/custom_background.dart';
 import 'package:chat_app/features/Home/presentation/views/widgets/home_view_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,8 +9,10 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: HomeViewBody(),
+    return CustomBackground(
+      child: Scaffold(
+        body: HomeViewBody(),
+      ),
     );
   }
 }

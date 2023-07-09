@@ -1,5 +1,8 @@
 import 'package:chat_app/core/cubits/auth_cubit/auth_states.dart';
+import 'package:chat_app/core/functions/navigation/animated_navigation.dart';
+import 'package:chat_app/core/functions/navigation/navigator_push_replacement.dart';
 import 'package:chat_app/core/functions/showing_toast.dart';
+import 'package:chat_app/features/Home/presentation/views/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +25,7 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(AuthRegisterToggleBoxInfoConState());
   }
 
-  void signIn() async {
+  void signIn(BuildContext context) async {
     emit(AuthSignInLoadingState());
     try {
       final credential = await FirebaseAuth.instance
@@ -31,6 +34,7 @@ class AuthCubit extends Cubit<AuthStates> {
         password: passwordController.text.trim(),
       )
           .then((value) {
+        NavigatorPushReplacement(context, HomeView());
         showToast("Logined Successfully", true);
         emit(AuthSignInSuccessState());
       });
@@ -41,7 +45,7 @@ class AuthCubit extends Cubit<AuthStates> {
         showToast("Wrong password", false);
       }
       emit(AuthSignInErrorState());
-    }catch (e) {
+    } catch (e) {
       print(e);
       showToast(e.toString(), false);
       emit(AuthSignInErrorState());
@@ -91,18 +95,25 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  Future<bool> emailVertication() async {
+  void emailVertication(BuildContext context) async {
     emit(AuthEmailVerticationLoadingState());
     var user = FirebaseAuth.instance.currentUser;
     try {
-      await user
-          ?.reload()
-          .then((value) => emit(AuthEmailVerticationSuccessState()));
+      await user?.reload().then((value) {
+        if (user.emailVerified) {
+          NavigatorPushReplacement(context, HomeView());
+          showToast("Registered Successfully", true);
+          emit(AuthEmailVerticationSuccessState());
+        } else {
+          showToast("Please, Confirm your email", true);
+          emit(AuthEmailVerticationSuccessState());
+        }
+      });
     } on Exception catch (e) {
       print(e);
+      showToast(e.toString(), true);
       emit(AuthEmailVerticationErrorState());
     }
-    return user!.emailVerified;
   }
 
   void deleteUserAccount() async {

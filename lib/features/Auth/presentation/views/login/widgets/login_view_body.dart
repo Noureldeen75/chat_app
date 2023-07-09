@@ -1,7 +1,8 @@
 import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
 import 'package:chat_app/core/cubits/main_cubit/main_cubit.dart';
-import 'package:chat_app/core/functions/animated_navigation.dart';
+import 'package:chat_app/core/functions/navigation/animated_navigation.dart';
 import 'package:chat_app/core/functions/device_info.dart';
+import 'package:chat_app/core/functions/navigation/navigator_push_replacement.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/core/widgets/custom_background.dart';
@@ -51,7 +52,9 @@ class LoginViewBody extends StatelessWidget {
                   Positioned(
                       bottom: -15,
                       child: CustomAuthButton(
-                        onTap: AuthCubit.get(context).signIn,
+                        onTap: () {
+                          AuthCubit.get(context).signIn(context);
+                        },
                       ))
                 ],
               ),
@@ -64,10 +67,7 @@ class LoginViewBody extends StatelessWidget {
               child: CustomAuthDownSection(
                 isLogin: true,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    FlipPageRoute(builder: (context) => RegisterView()),
-                  );
+                  NavigatorPushReplacement(context, RegisterView());
                 },
               )),
         ],
