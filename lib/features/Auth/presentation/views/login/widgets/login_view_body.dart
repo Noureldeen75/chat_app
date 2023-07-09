@@ -1,10 +1,13 @@
 import 'package:chat_app/core/cubits/auth_cubit/auth_cubit.dart';
+import 'package:chat_app/core/cubits/main_cubit/main_cubit.dart';
+import 'package:chat_app/core/functions/animated_navigation.dart';
 import 'package:chat_app/core/functions/device_info.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/core/widgets/custom_background.dart';
 import 'package:chat_app/features/Auth/presentation/views/login/widgets/custom_login_box_info_content.dart';
 import 'package:chat_app/features/Auth/presentation/views/login/widgets/custom_login_view_title.dart';
+import 'package:chat_app/features/Auth/presentation/views/register/register_view.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_background.dart';
 import 'package:chat_app/features/Auth/presentation/views/login/widgets/custom_login_box_info.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_button.dart';
@@ -45,7 +48,11 @@ class LoginViewBody extends StatelessWidget {
                         ),
                         child: CustomLoginBoxInfoContent()),
                   ),
-                  Positioned(bottom: -15, child: CustomAuthButton(onTap: AuthCubit.get(context).signIn,))
+                  Positioned(
+                      bottom: -15,
+                      child: CustomAuthButton(
+                        onTap: AuthCubit.get(context).signIn,
+                      ))
                 ],
               ),
             ),
@@ -56,7 +63,12 @@ class LoginViewBody extends StatelessWidget {
               end: 0,
               child: CustomAuthDownSection(
                 isLogin: true,
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    FlipPageRoute(builder: (context) => RegisterView()),
+                  );
+                },
               )),
         ],
       ),

@@ -14,6 +14,7 @@ class AuthCubit extends Cubit<AuthStates> {
   TextEditingController ageController = TextEditingController();
 
   void signIn() async {
+    emit(AuthSignInLoadingState());
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
@@ -23,6 +24,7 @@ class AuthCubit extends Cubit<AuthStates> {
           .then((value) {
         print("signIn_done");
         print(value.user!.uid);
+        emit(AuthSignInSuccessState());
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -30,10 +32,12 @@ class AuthCubit extends Cubit<AuthStates> {
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+      emit(AuthSignInErrorState());
     }
   }
 
   void signUp() async {
+    emit(AuthSignUpLoadingState());
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -42,6 +46,7 @@ class AuthCubit extends Cubit<AuthStates> {
       )
           .then((value) {
         print("Done");
+        emit(AuthSignUpSuccessState());
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -49,8 +54,10 @@ class AuthCubit extends Cubit<AuthStates> {
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
+       emit(AuthSignUpErrorState());
     } catch (e) {
       print(e);
+       emit(AuthSignUpErrorState());
     }
   }
 }
