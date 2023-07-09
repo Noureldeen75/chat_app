@@ -32,7 +32,14 @@ class CustomAuthButton extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.all(15.0),
             decoration: BoxDecoration(
-              color: ColorsClass.mainBlue,
+              gradient: LinearGradient(
+                begin: AlignmentDirectional.topEnd,
+                end: AlignmentDirectional.topStart,
+                colors: [
+                  Color.fromARGB(255, 56, 149, 248),
+                  ColorsClass.mainBlue,
+                ]
+              ),
               //   borderRadius: BorderRadius.circular(5.0),
               shape: BoxShape.circle,
               boxShadow: [

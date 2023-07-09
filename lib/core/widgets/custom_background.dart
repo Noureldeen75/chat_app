@@ -1,4 +1,4 @@
-import 'package:chat_app/core/Functions/device_info.dart';
+import 'package:chat_app/core/functions/device_info.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';

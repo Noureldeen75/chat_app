@@ -1,4 +1,4 @@
-import 'package:chat_app/core/Functions/device_info.dart';
+import 'package:chat_app/core/functions/device_info.dart';
 import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_facebook_google.dart';
