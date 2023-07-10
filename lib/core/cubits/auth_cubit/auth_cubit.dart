@@ -14,18 +14,41 @@ class AuthCubit extends Cubit<AuthStates> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController numberCodeController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   bool isEmailVericationSent = false;
-  bool isUserCreated = false;
-  bool isBoxVerticationContent = false;
+  bool isNumberVericationSent = false;
 
-  void toggRegisterleBoxContent() {
-    isBoxVerticationContent = !isBoxVerticationContent;
-    emit(AuthRegisterToggleBoxInfoConState());
+  bool toggleEmailOrNumberBoxContent = true;
+
+  bool isUserCreatedWithEmail = false;
+  bool toggleEmailRegistrationSteps = false;
+
+  bool isPhoneNumberGiven = false;
+  bool togglePhoneNumberRegistrationSteps = false;
+
+  void toggleWithEmailOrNumberBoxContent({required String registerType}) {
+    if (registerType == "Email") {
+      toggleEmailOrNumberBoxContent = true;
+    } else {
+      toggleEmailOrNumberBoxContent = false;
+    }
+    emit(AuthToggleWithEmailOrNumberBoxContent());
   }
 
-  void signIn(BuildContext context) async {
+  void toggleEmailRegistrationStepsBoxContent() {
+    toggleEmailRegistrationSteps = !toggleEmailRegistrationSteps;
+    emit(AuthToggleEmailRegistrationStepsBoxContent());
+  }
+
+  void togglePhoneNumberRegistrationStepsBoxContent() {
+    togglePhoneNumberRegistrationSteps = !togglePhoneNumberRegistrationSteps;
+    emit(AuthToggleEmailRegistrationStepsBoxContent());
+  }
+
+  void signInWithEmailAndPassword(BuildContext context) async {
     emit(AuthSignInLoadingState());
     try {
       final credential = await FirebaseAuth.instance
@@ -52,7 +75,7 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  void signUp() async {
+  void signUpWithEmailAndPassword() async {
     emit(AuthSignUpLoadingState());
     try {
       final credential = await FirebaseAuth.instance
@@ -61,8 +84,8 @@ class AuthCubit extends Cubit<AuthStates> {
         password: passwordController.text.trim(),
       )
           .then((value) {
-        isUserCreated = true;
-        isBoxVerticationContent = true;
+        isUserCreatedWithEmail = true;
+        toggleEmailRegistrationSteps = true;
         emit(AuthSignUpSuccessState());
       });
     } on FirebaseAuthException catch (e) {

@@ -2,7 +2,9 @@ abstract class AuthStates {}
 
 class AuthInitialState extends AuthStates{}
 
-class AuthRegisterToggleBoxInfoConState extends AuthStates{}
+class AuthToggleWithEmailOrNumberBoxContent extends AuthStates{}
+class AuthToggleEmailRegistrationStepsBoxContent extends AuthStates{}
+class AuthTogglePhoneNumberRegistrationStepsBoxContent extends AuthStates{}
 
 class AuthSignInLoadingState extends AuthStates{}
 class AuthSignInSuccessState extends AuthStates{}

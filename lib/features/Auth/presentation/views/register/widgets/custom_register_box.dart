@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class CustomRegisterBoxInfo extends StatelessWidget {
-  const CustomRegisterBoxInfo({super.key, required this.child});
+class CustomRegisterBox extends StatelessWidget {
+  const CustomRegisterBox({super.key, required this.child});
 
   final Widget child;
   @override

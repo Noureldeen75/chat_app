@@ -7,7 +7,7 @@ import 'package:chat_app/core/utils/Colors/ColorsClass.dart';
 import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/core/widgets/custom_background.dart';
 import 'package:chat_app/features/Auth/presentation/views/login/login_view.dart';
-import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box_info.dart';
+import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_box_content.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_view_title.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_background.dart';
@@ -44,7 +44,7 @@ class RegisterViewBody extends StatelessWidget {
                 clipBehavior: Clip.none,
                 alignment: Alignment.center,
                 children: [
-                  CustomRegisterBoxInfo(
+                  CustomRegisterBox(
                     child: Padding(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 15.0,
@@ -55,11 +55,12 @@ class RegisterViewBody extends StatelessWidget {
                       bottom: -5,
                       child: CustomAuthButton(
                         onTap: () async {
-                          if (AuthCubit.get(context).isUserCreated &&
-                              AuthCubit.get(context).isBoxVerticationContent) {
+                          if (AuthCubit.get(context).isUserCreatedWithEmail &&
+                              AuthCubit.get(context)
+                                  .toggleEmailRegistrationSteps) {
                             AuthCubit.get(context).emailVertication(context);
                           } else {
-                            AuthCubit.get(context).signUp();
+                            AuthCubit.get(context).signUpWithEmailAndPassword();
                           }
                         },
                       ))

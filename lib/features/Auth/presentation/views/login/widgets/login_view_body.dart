@@ -53,7 +53,8 @@ class LoginViewBody extends StatelessWidget {
                       bottom: -15,
                       child: CustomAuthButton(
                         onTap: () {
-                          AuthCubit.get(context).signIn(context);
+                          AuthCubit.get(context)
+                              .signInWithEmailAndPassword(context);
                         },
                       ))
                 ],
