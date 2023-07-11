@@ -58,9 +58,10 @@ class CustomAuthButton extends StatelessWidget {
                   ],
                 ),
                 child: ConditionalBuilder(
-                  condition: state is AuthSignInLoadingState ||
+                  condition: state is AuthEmailSignInLoadingState ||
                       state is AuthSignUpLoadingState ||
-                      state is AuthEmailVerticationLoadingState,
+                      state is AuthEmailVerticationLoadingState ||
+                      state is AuthPhoneNumberSignInLoadingState,
                   builder: (context) => Center(
                       child: CircularProgressIndicator(
                     color: ColorsClass.blue1,

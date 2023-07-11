@@ -60,7 +60,20 @@ class RegisterViewBody extends StatelessWidget {
                                   .toggleEmailRegistrationSteps) {
                             AuthCubit.get(context).emailVertication(context);
                           } else {
-                            AuthCubit.get(context).signUpWithEmailAndPassword();
+                            if (AuthCubit.get(context).isPhoneNumberGiven &&
+                                AuthCubit.get(context)
+                                    .togglePhoneNumberRegistrationSteps) {
+                            //  AuthCubit.get(context).signInWithPhoneNumber();
+                            } else {
+                              if (AuthCubit.get(context)
+                                  .toggleEmailOrNumberBoxContent) {
+                                AuthCubit.get(context)
+                                    .signUpWithEmailAndPassword();
+                              } else {
+                                AuthCubit.get(context)
+                                    .checkingPhoneNumberGiven();
+                              }
+                            }
                           }
                         },
                       ))

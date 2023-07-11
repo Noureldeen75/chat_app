@@ -28,12 +28,12 @@ class CustomRegisterPhoneNumberVerticationBar extends StatelessWidget {
               Text("Number Vertication", style: TextStyles.textSize16),
               Spacer(),
               ConditionalBuilder(
-                condition: state is! AuthSendingEmailVerticationLoadingState,
+                condition: state is! AuthSendingSmsCodeVerticationLoadingState,
                 builder: (context) =>
-                    AuthCubit.get(context).isEmailVericationSent
+                    AuthCubit.get(context).isSmsCodeVericationSent
                         ? Icon(Icons.check)
                         : InkWell(
-                            onTap: AuthCubit.get(context).sendEmailVertication,
+                            onTap: AuthCubit.get(context).sendSmsCode,
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 5.0, vertical: 2.0),

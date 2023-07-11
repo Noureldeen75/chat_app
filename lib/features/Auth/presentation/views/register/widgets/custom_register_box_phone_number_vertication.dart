@@ -8,6 +8,7 @@ import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_a
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class CustomRegisterBoxPhoneNumberVertication extends StatelessWidget {
   const CustomRegisterBoxPhoneNumberVertication({super.key});
@@ -30,7 +31,7 @@ class CustomRegisterBoxPhoneNumberVertication extends StatelessWidget {
         Spacer(),
         CustomRegisterPhoneNumberVerticationBar(),
         Spacer(),
-        if (AuthCubit.get(context).isNumberVericationSent)
+        if (AuthCubit.get(context).isSmsCodeVericationSent)
           Align(
             alignment: AlignmentDirectional.centerStart,
             child: Text(
@@ -40,15 +41,33 @@ class CustomRegisterBoxPhoneNumberVertication extends StatelessWidget {
               ),
             ),
           ),
-        if (AuthCubit.get(context).isNumberVericationSent)
+        if (AuthCubit.get(context).isSmsCodeVericationSent)
           Padding(
             padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-            child: CustomAuthTextField(
-              label: "Code",
-              prefixIconDate: Icons.numbers,
-              controller: AuthCubit.get(context).numberCodeController,
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: PinCodeTextField(
+              // obscureText: true,
+              appContext: context,
+              // controller: AuthCubit.get(context).pinCodeController,
+              length: 6,
               keyboardType: TextInputType.number,
+              animationType: AnimationType.fade,
+              pinTheme: PinTheme(
+                shape: PinCodeFieldShape.box,
+                borderRadius: BorderRadius.circular(5),
+                fieldHeight: 40,
+                fieldWidth: 35,
+                activeFillColor: Colors.white,
+              ),
+              onCompleted: (value) {
+                print(value);
+                AuthCubit.get(context).signInWithPhoneNumber(smsCode: value, context: context);
+              },
+              animationDuration: Duration(milliseconds: 300),
+              autoFocus: true,
+              // onChanged: (value) {
+              //   // Do something with the user's input
+              // },
             ),
           ),
         Spacer(

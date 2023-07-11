@@ -1,5 +1,4 @@
 import 'package:chat_app/core/cubits/auth_cubit/auth_states.dart';
-import 'package:chat_app/core/functions/navigation/animated_navigation.dart';
 import 'package:chat_app/core/functions/navigation/navigator_push_replacement.dart';
 import 'package:chat_app/core/functions/showing_toast.dart';
 import 'package:chat_app/features/Home/presentation/views/home_view.dart';
@@ -15,11 +14,15 @@ class AuthCubit extends Cubit<AuthStates> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController numberCodeController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String verificationId = '';
+  String phoneNumber = '';
+
   bool isEmailVericationSent = false;
-  bool isNumberVericationSent = false;
+  bool isSmsCodeVericationSent = false;
 
   bool toggleEmailOrNumberBoxContent = true;
 
@@ -48,8 +51,95 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(AuthToggleEmailRegistrationStepsBoxContent());
   }
 
+  void checkingPhoneNumberGiven() {
+    phoneNumber = phoneNumberController.text;
+    bool isValidPhoneNumber(String phoneNumber) {
+      if (phoneNumber.startsWith('0')) {
+        this.phoneNumber = phoneNumber.replaceFirst('0', ' ');
+      }
+      return int.tryParse(phoneNumber) != null;
+    }
+
+    bool isValid = isValidPhoneNumber(phoneNumber);
+    if (isValid) {
+      isPhoneNumberGiven = true;
+      togglePhoneNumberRegistrationSteps = true;
+    } else {
+      showToast("invalid phone number", false);
+    }
+    emit(AuthCheckingPhoneNumberGivenState());
+    print(phoneNumber);
+  }
+
+  void sendSmsCode() async {
+    emit(AuthSendingSmsCodeVerticationLoadingState());
+    try {
+      await FirebaseAuth.instance
+          .verifyPhoneNumber(
+        phoneNumber: '+20${phoneNumber}',
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          //   await auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            showToast('Not valid phone number', false);
+          }
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          this.verificationId = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      )
+          .then((value) {
+        isSmsCodeVericationSent = true;
+        emit(AuthSendingSmsCodeVerticationSuccessState());
+      });
+    } catch (e) {
+      print(e.toString());
+      showToast(e.toString(), false);
+      emit(AuthSendingSmsCodeVerticationSuccessState());
+    }
+  }
+
+  void signInWithPhoneNumber(
+      {required String smsCode, required BuildContext context}) async {
+    emit(AuthPhoneNumberSignInLoadingState());
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: smsCode);
+    try {
+      UserCredential userCredential =
+          await auth.signInWithCredential(credential);
+      if (userCredential.user != null) {
+        NavigatorPushReplacement(context, HomeView());
+        showToast("Logined Successfully", true);
+        emit(AuthPhoneNumberSignInSuccessState());
+      } else {
+        print("Faild");
+        showToast("Check the code", false);
+        emit(AuthPhoneNumberSignInSuccessState());
+      }
+    } catch (e) {
+      print(e.toString());
+      showToast(e.toString(), false);
+      emit(AuthPhoneNumberSignInErrorState());
+    }
+  }
+
+  // void recaptchaLayer() async {
+  //   ConfirmationResult confirmationResult = await auth.signInWithPhoneNumber(
+  //       '+44 7123 123 456',
+  //       RecaptchaVerifier(
+  //         auth: FirebaseAuthPlatform,
+  //           container: 'recaptcha',
+  //           size: RecaptchaVerifierSize.compact,
+  //           theme: RecaptchaVerifierTheme.dark,
+  //           onSuccess: () => print('reCAPTCHA Completed!'),
+  //           onError: (FirebaseAuthException error) => print(error),
+  //           onExpired: () => print('reCAPTCHA Expired!')));
+  // }
+
   void signInWithEmailAndPassword(BuildContext context) async {
-    emit(AuthSignInLoadingState());
+    emit(AuthEmailSignInLoadingState());
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
@@ -59,7 +149,7 @@ class AuthCubit extends Cubit<AuthStates> {
           .then((value) {
         NavigatorPushReplacement(context, HomeView());
         showToast("Logined Successfully", true);
-        emit(AuthSignInSuccessState());
+        emit(AuthEmailSignInSuccessState());
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -67,11 +157,11 @@ class AuthCubit extends Cubit<AuthStates> {
       } else if (e.code == 'wrong-password') {
         showToast("Wrong password", false);
       }
-      emit(AuthSignInErrorState());
+      emit(AuthEmailSignInErrorState());
     } catch (e) {
       print(e);
       showToast(e.toString(), false);
-      emit(AuthSignInErrorState());
+      emit(AuthEmailSignInErrorState());
     }
   }
 
@@ -153,3 +243,17 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 }
+
+
+// Phone Authentication...
+//
+// 1- Enable Phone as a Sign-In method in the Firebase console.
+//
+// 2- Set your app's SHA-1 (for android)....
+// Going to the firebase console and selecting a project
+// Clicking on the android icon and go to setting
+// Scrolling down and clicking Add Fingerprint
+// Run this command(FOR YOUR DEVICE ONLY) >>> keytool -list -v -alias androiddebugkey -keystore "C:\Users\Mega Store\.android\debug.keystore" -storepass android
+// Then add the SHA1: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  into firebase.
+//
+// 3- The code
