@@ -4,6 +4,8 @@ import 'package:chat_app/core/utils/text_styles/TextStyles.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_phone_number_register_back_button.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_email_vertication_bar.dart';
 import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_phone_number_vertication_bar.dart';
+import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_resending_code_bar.dart';
+import 'package:chat_app/features/Auth/presentation/views/register/widgets/custom_register_resending_code_counter.dart';
 import 'package:chat_app/features/Auth/presentation/views/utils_widgets/custom_auth_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -61,17 +63,20 @@ class CustomRegisterBoxPhoneNumberVertication extends StatelessWidget {
               ),
               onCompleted: (value) {
                 print(value);
-                AuthCubit.get(context).signInWithPhoneNumber(smsCode: value, context: context);
+                AuthCubit.get(context)
+                    .signInWithPhoneNumber(smsCode: value, context: context);
               },
               animationDuration: Duration(milliseconds: 300),
               autoFocus: true,
               // onChanged: (value) {
-              //   // Do something with the user's input
               // },
             ),
           ),
+        if (AuthCubit.get(context).isSmsCodeVericationSent) Spacer(),
+        if (AuthCubit.get(context).isSmsCodeVericationSent)
+          CustomRegisterResendingCodeBar(),
         Spacer(
-          flex: 3,
+          flex: 2,
         ),
         CustomPhoneNumberRegisterBackButton(),
         SizedBox(

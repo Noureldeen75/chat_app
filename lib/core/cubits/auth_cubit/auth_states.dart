@@ -5,6 +5,7 @@ class AuthInitialState extends AuthStates{}
 class AuthToggleWithEmailOrNumberBoxContent extends AuthStates{}
 class AuthToggleEmailRegistrationStepsBoxContent extends AuthStates{}
 class AuthTogglePhoneNumberRegistrationStepsBoxContent extends AuthStates{}
+class AuthToggleIsSmsCodeVericationResent extends AuthStates{}
 
 class AuthEmailSignInLoadingState extends AuthStates{}
 class AuthEmailSignInSuccessState extends AuthStates{}
@@ -31,6 +32,13 @@ class AuthSendingSmsCodeVerticationErrorState extends AuthStates{}
 class AuthEmailVerticationLoadingState extends AuthStates{}
 class AuthEmailVerticationSuccessState extends AuthStates{}
 class AuthEmailVerticationErrorState extends AuthStates{}
+
+
+class AuthSignedOutLoadingState extends AuthStates{}
+class AuthSignedOutSuccessState extends AuthStates{}
+class AuthSignedOutErrorState extends AuthStates{}
+
+
 
 class AuthDeletingUserAccountLoadingState extends AuthStates{}
 class AuthDeletingUserAccountSuccessState extends AuthStates{}

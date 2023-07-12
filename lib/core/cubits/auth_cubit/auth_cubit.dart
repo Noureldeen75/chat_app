@@ -23,6 +23,7 @@ class AuthCubit extends Cubit<AuthStates> {
 
   bool isEmailVericationSent = false;
   bool isSmsCodeVericationSent = false;
+  bool isSmsCodeVericationResent = false;
 
   bool toggleEmailOrNumberBoxContent = true;
 
@@ -49,6 +50,11 @@ class AuthCubit extends Cubit<AuthStates> {
   void togglePhoneNumberRegistrationStepsBoxContent() {
     togglePhoneNumberRegistrationSteps = !togglePhoneNumberRegistrationSteps;
     emit(AuthToggleEmailRegistrationStepsBoxContent());
+  }
+
+  void toggleIsSmsCodeVericationResent() {
+    isSmsCodeVericationResent = !isSmsCodeVericationResent;
+    emit(AuthToggleIsSmsCodeVericationResent());
   }
 
   void checkingPhoneNumberGiven() {
@@ -101,6 +107,12 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
+  void resendSmsCode() {
+   signOut();
+   sendSmsCode();
+    toggleIsSmsCodeVericationResent();
+  }
+
   void signInWithPhoneNumber(
       {required String smsCode, required BuildContext context}) async {
     emit(AuthPhoneNumberSignInLoadingState());
@@ -120,7 +132,11 @@ class AuthCubit extends Cubit<AuthStates> {
       }
     } catch (e) {
       print(e.toString());
-      showToast(e.toString(), false);
+      String errorMessage = 'An error occurred. Please try again later.';
+      if (e is FirebaseAuthException && e.code == 'invalid-verification-code') {
+        errorMessage = 'The SMS code entered is invalid';
+      }
+      showToast(errorMessage, false);
       emit(AuthPhoneNumberSignInErrorState());
     }
   }
@@ -229,6 +245,18 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
+  void signOut() async {
+    emit(AuthSignedOutLoadingState());
+    try {
+      await FirebaseAuth.instance.signOut();
+      emit(AuthSignedOutSuccessState());
+    } catch (e) {
+      print(e.toString());
+      showToast(e.toString(), false);
+      emit(AuthSignedOutErrorState());
+    }
+  }
+
   void deleteUserAccount() async {
     emit(AuthDeletingUserAccountLoadingState());
     try {
@@ -257,3 +285,4 @@ class AuthCubit extends Cubit<AuthStates> {
 // Then add the SHA1: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  into firebase.
 //
 // 3- The code
+// note: for resending the code without problems, ensure that you signed out.
